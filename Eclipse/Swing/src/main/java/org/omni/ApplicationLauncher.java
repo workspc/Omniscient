@@ -1,32 +1,17 @@
 package org.omni;
 
-import static javax.swing.SwingUtilities.invokeLater;
-import static org.omni.Property.prop;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import org.omni.spy.Spy;
 
 public class ApplicationLauncher {
 
-	private final Application application;
+	private static Application application;
 
-	private ApplicationLauncher(Application application) {
-		this.application = application;
-	}
-
-	private void launch() {
-		invokeLater(new Runnable() {
-			public void run() {
-				application.execute();
-			}
-		});
-	}
-
-	@SuppressWarnings("unchecked")
-	public static void main(String[] args)
-			throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-
-		Class<Application> loadedApplication = (Class<Application>) Class
-				.forName(prop.getString(prop.getString("application.run") + ".class"));
-		Application application = loadedApplication.newInstance();
-		ApplicationLauncher launcher = new ApplicationLauncher(application);
-		launcher.launch();
+	public static void bind() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
+			UnsupportedLookAndFeelException {
+		if (application == null) {
+			application = new Spy();
+		}
 	}
 }

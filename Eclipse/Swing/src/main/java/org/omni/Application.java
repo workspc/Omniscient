@@ -1,6 +1,8 @@
 package org.omni;
 
+import java.awt.Component;
+
 public interface Application {
 
-	void execute();
+	void build(Component root, Component currentComponent);
 }
